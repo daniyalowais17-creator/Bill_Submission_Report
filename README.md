@@ -1,8 +1,8 @@
-# 📊 Billing Submission Automation
+## 📊 Billing Submission Automation
 
 > **Make your daily Billing Submission process faster, simpler, and more consistent.**
 
-## What is Billing Submission Automation?
+### What is Billing Submission Automation?
 
 If you prepare a Billing Submission report every day, you probably know how repetitive the process can become — opening multiple files, updating data, checking statuses, matching information, and preparing the final Master file.
 
