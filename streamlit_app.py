@@ -45,8 +45,8 @@ div.stButton > button[kind="primary"] {
     transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 div.stButton > button[kind="primary"]:hover:not(:disabled) {
-    background-color: #C93D42;
-    border-color: #C93D42;
+    background-color: #FF5353;
+    border-color: Black;
 }
 div.stButton > button[kind="primary"]:disabled {
     background-color: #262A31;
