@@ -45,7 +45,7 @@ div.stButton > button[kind="primary"] {
     transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 div.stButton > button[kind="primary"]:hover:not(:disabled) {
-    background-color: #FF5353;
+    background-color: #E5484D;
     border-color: Black;
 }
 div.stButton > button[kind="primary"]:disabled {
@@ -55,7 +55,8 @@ div.stButton > button[kind="primary"]:disabled {
     opacity: 1;
 }
 div.stButton > button[kind="primary"]:disabled:hover {
-    cursor: not-allowed;
+    background-color: #FF5353;
+    border-color: Black;
 }
 </style>
 """, unsafe_allow_html=True)
