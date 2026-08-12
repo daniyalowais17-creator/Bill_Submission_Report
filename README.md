@@ -22,7 +22,7 @@ Your normal Excel workflow can then continue from there, including reviewing the
 
 ---
 
-# 📂 Required Files
+## 📂 Required Files
 
 Before starting, make sure you have these three files ready.
 
@@ -48,7 +48,7 @@ The Master file provides the structure and template that the application uses to
 
 ---
 
-# ⚙️ What the Application Does
+## ⚙️ What the Application Does
 
 Once the three files are uploaded, the application handles the repetitive processing steps for you.
 
@@ -75,11 +75,11 @@ The goal is simple:
 
 ---
 
-# 🖥️ How to Use the Application
+## 🖥️ How to Use the Application
 
 The application is designed to keep the process as simple as possible.
 
-## Step 1 Upload BDR
+### Step 1 Upload BDR
 
 Select:
 
@@ -89,7 +89,7 @@ and choose the latest Billing Detail Report.
 
 ---
 
-## Step 2 Upload Case_AR
+### Step 2 Upload Case_AR
 
 Select:
 
@@ -99,7 +99,7 @@ and choose the latest Case_AR workbook.
 
 ---
 
-## Step 3 Upload Master
+### Step 3 Upload Master
 
 Select:
 
@@ -109,7 +109,7 @@ and choose the current Billing Submission Master workbook.
 
 ---
 
-## Step 4 Process the Files
+### Step 4 Process the Files
 
 Once all three files have been uploaded, select:
 
@@ -121,26 +121,10 @@ You can monitor the processing status directly from the application.
 
 ---
 
-## Step 5 Download the Result
+### Step 5 Download the Result
 
 Once processing is complete, the application generates:
 
-```text
-Billing_Submission_Master_File.xlsx
-
-## 📊 Final Output
-
-Upload BDR
-     +
-Upload Case_AR
-     +
-Upload Master
-     ↓
-Billing Submission Automation
-     ↓
-Billing_Submission_Master_File.xlsx
-     ↓
-Review the output
      ↓
 Refresh Pivot / Data Model
      ↓
