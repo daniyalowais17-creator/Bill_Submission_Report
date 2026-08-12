@@ -11,31 +11,64 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------------------------------
-# Simple, flat styling. One accent color, no gradients, no glow/shadow.
+# Styling
 # ---------------------------------------------------------------------------
 st.markdown("""
 <style>
 .block-container {max-width: 780px; padding-top: 2.2rem;}
-h1 {font-size: 0.5rem; margin-bottom: 0.2rem;}
-.subtitle {opacity: 0.7; font-size: 0.95rem; margin-bottom: 1.6rem;}
-.step-label {font-weight: 450; font-size: 0.80rem; margin-bottom: 0.3rem;}
-.step-hint {opacity: 0.65; font-size: 0.82rem; margin-top: -0.2rem; margin-bottom: 0.5rem;}
-hr {margin: 1.6rem 0;}
+
+.header-block {margin-bottom: 1.5rem;}
+.header-block h1 {
+    font-size: 1.35rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.3;
+}
+.header-block .subtitle {
+    margin: 0;
+    opacity: 0.7;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.step-label {font-weight: 600; font-size: 0.85rem; margin-bottom: 0.25rem;}
+.step-hint {opacity: 0.65; font-size: 0.82rem; margin-top: -0.15rem; margin-bottom: 0.5rem;}
+hr {margin: 1.5rem 0;}
+
+/* Process button: red + ready when enabled, muted + clearly disabled otherwise */
+div.stButton > button[kind="primary"] {
+    background-color: #E5484D;
+    border: 1px solid #E5484D;
+    color: #ffffff;
+    font-weight: 600;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+div.stButton > button[kind="primary"]:hover:not(:disabled) {
+    background-color: #C93D42;
+    border-color: #C93D42;
+}
+div.stButton > button[kind="primary"]:disabled {
+    background-color: #262A31;
+    border: 1px solid #363B44;
+    color: rgba(255, 255, 255, 0.4);
+    opacity: 1;
+}
+div.stButton > button[kind="primary"]:disabled:hover {
+    cursor: not-allowed;
+}
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("# 📊 Billing Submission Automation")
-st.markdown(
-    '<p class="subtitle">Upload your BDR, Case_AR, and Master files below, then hit process. '
-    'The tool builds the Billing Submission Master File for you.</p>',
-    unsafe_allow_html=True,
-)
+st.markdown("""
+<div class="header-block">
+<h1>📊 Billing Submission Automation</h1>
+<p class="subtitle">Upload your BDR, Case_AR, and Master files below, then hit process. The tool builds the Billing Submission Master File for you.</p>
+</div>
+""", unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
 # Load the processing engine from web_app.py.
-# We only need its functions here — the Flask server inside it never runs,
-# but the module still needs its imports (like flask) installed for the
-# import itself to succeed. That's handled by requirements.txt.
 # ---------------------------------------------------------------------------
 ENGINE_PATH = Path(__file__).with_name("web_app.py")
 
@@ -55,11 +88,11 @@ def load_engine():
 try:
     engine = load_engine()
 except ModuleNotFoundError as e:
-    missing = str(e).split("'")[1] if "'" in str(e) else str(e)
+    missing_pkg = str(e).split("'")[1] if "'" in str(e) else str(e)
     st.error(
-        f"The app couldn't start because the **`{missing}`** package isn't installed.\n\n"
+        f"The app couldn't start because the **`{missing_pkg}`** package isn't installed.\n\n"
         f"Fix: open `requirements.txt` in your repo (the file must be named exactly "
-        f"`requirements.txt`, not `requirements_streamlit.txt`) and make sure `{missing}` "
+        f"`requirements.txt`, not `requirements_streamlit.txt`) and make sure `{missing_pkg}` "
         f"is listed in it. Then push the change and, in Streamlit Cloud, use "
         f"**Manage app → Reboot** to reinstall dependencies."
     )
@@ -93,10 +126,27 @@ st.divider()
 
 ready = bdr_file is not None and case_file is not None and master_file is not None
 
+# Build a specific "what's missing" message for the hover tooltip
+missing_files = []
+if bdr_file is None:
+    missing_files.append("BDR")
+if case_file is None:
+    missing_files.append("Case_AR")
+if master_file is None:
+    missing_files.append("Master")
+
 if not ready:
     st.caption("Upload all three files above to enable processing.")
 
-if st.button("Process files", type="primary", disabled=not ready, use_container_width=True):
+button_help = None if ready else f"Upload {', '.join(missing_files)} to enable processing"
+
+if st.button(
+    "Process files",
+    type="primary",
+    disabled=not ready,
+    use_container_width=True,
+    help=button_help,
+):
     temp_dir = Path(tempfile.mkdtemp(prefix="billing_submission_"))
     bdr_path = temp_dir / bdr_file.name
     case_path = temp_dir / case_file.name
