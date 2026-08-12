@@ -1,0 +1,9 @@
+# Billing Submission Automation - runtime dependencies
+flask
+pandas
+numpy
+openpyxl
+python-calamine
+
+# Only required for building the Windows EXE
+pyinstaller
