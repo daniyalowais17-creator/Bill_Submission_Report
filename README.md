@@ -79,7 +79,7 @@ The goal is simple:
 
 The application is designed to keep the process as simple as possible.
 
-## Step 1 — Upload BDR
+## Step 1 Upload BDR
 
 Select:
 
@@ -89,7 +89,7 @@ and choose the latest Billing Detail Report.
 
 ---
 
-## Step 2 — Upload Case_AR
+## Step 2 Upload Case_AR
 
 Select:
 
@@ -99,7 +99,7 @@ and choose the latest Case_AR workbook.
 
 ---
 
-## Step 3 — Upload Master
+## Step 3 Upload Master
 
 Select:
 
@@ -109,7 +109,7 @@ and choose the current Billing Submission Master workbook.
 
 ---
 
-## Step 4 — Process the Files
+## Step 4 Process the Files
 
 Once all three files have been uploaded, select:
 
@@ -121,7 +121,7 @@ You can monitor the processing status directly from the application.
 
 ---
 
-## Step 5 — Download the Result
+## Step 5 Download the Result
 
 Once processing is complete, the application generates:
 
