@@ -99,7 +99,29 @@ def fmt_num(v: float) -> str:
     if v == int(v):
         return str(int(v))
     return repr(v)
+# ---------------------------------------------------------------------
+# Column-name normalization: strips extra spaces, fixes casing so
+# "EDI Status", "EDI  STATUS", " edi status" all map to one clean name.
+# ---------------------------------------------------------------------
+COLUMN_ALIASES = {
+    "edi status": "EDI STATUS",
+    "edi_status": "EDI STATUS",
+    "caseid": "CASEID",
+    "case id": "CASEID",
+    # add more variants here as you spot them
+}
 
+
+def normalize_columns(df):
+    new_columns = []
+    for col in df.columns:
+        cleaned = re.sub(r"\s+", " ", str(col)).strip()
+        key = cleaned.lower().replace("_", " ").strip()
+        if key in COLUMN_ALIASES:
+            cleaned = COLUMN_ALIASES[key]
+        new_columns.append(cleaned)
+    df.columns = new_columns
+    return df
 
 def process_one(bdr_path: Path, case_ar_path: Path, master_path: Path, output_path: Path):
     print(f"\n=== Processing ===\n  BDR:     {bdr_path}\n  Case_AR: {case_ar_path}\n  Master:  {master_path}\n  Output:  {output_path}")
@@ -146,6 +168,7 @@ def process_one(bdr_path: Path, case_ar_path: Path, master_path: Path, output_pa
 
     bdr = pd.read_csv(bdr_path, dtype=str, keep_default_na=True, low_memory=False)
     bdr.columns = [c.strip() for c in bdr.columns]
+    bdr = normalize_columns(bdr)  
     n = len(bdr)
     print(f"  BDR rows: {n}, cols: {len(bdr.columns)}")
 
@@ -163,6 +186,7 @@ def process_one(bdr_path: Path, case_ar_path: Path, master_path: Path, output_pa
         raise ValueError("Could not find a 'Bill Submission Date' column in the BDR file.")
 
     case_ar = fast_read_excel(case_ar_path, sheet_name=0)
+    case_ar = normalize_columns(case_ar)
     case_ar["CASEID"] = case_ar["CASEID"].astype(str).str.strip()
     edi_lookup = dict(zip(case_ar["CASEID"], case_ar["EDI STATUS"]))
     print(f"  [{ (datetime.now()-t0).total_seconds():.1f}s] Case_AR loaded: {len(case_ar)} rows")
