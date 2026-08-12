@@ -4,7 +4,7 @@
 
 ### What is Billing Submission Automation?
 
-If you prepare a Billing Submission report every day, you probably know how repetitive the process can become — opening multiple files, updating data, checking statuses, matching information, and preparing the final Master file.
+If you prepare a Billing Submission report every day, you probably know how repetitive the process can become opening multiple files, updating data, checking statuses, matching information, and preparing the final Master file.
 
 **Billing Submission Automation** is built to simplify that entire process.
 
@@ -26,7 +26,7 @@ Your normal Excel workflow can then continue from there, including reviewing the
 
 Before starting, make sure you have these three files ready.
 
-### 1. BDR — Billing Detail Report
+### 1. BDR Billing Detail Report
 
 Upload the latest BDR file for the current reporting cycle.
 
@@ -124,4 +124,3 @@ You can monitor the processing status directly from the application.
 ### Step 5 Download the Result
 
 Once processing is complete, the application generates:
-
