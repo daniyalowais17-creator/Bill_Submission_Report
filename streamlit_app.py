@@ -16,9 +16,9 @@ st.set_page_config(
 st.markdown("""
 <style>
 .block-container {max-width: 780px; padding-top: 2.2rem;}
-h1 {font-size: 1rem; margin-bottom: 0.2rem;}
+h1 {font-size: 0.5rem; margin-bottom: 0.2rem;}
 .subtitle {opacity: 0.7; font-size: 0.95rem; margin-bottom: 1.6rem;}
-.step-label {font-weight: 600; font-size: 0.92rem; margin-bottom: 0.3rem;}
+.step-label {font-weight: 450; font-size: 0.80rem; margin-bottom: 0.3rem;}
 .step-hint {opacity: 0.65; font-size: 0.82rem; margin-top: -0.2rem; margin-bottom: 0.5rem;}
 hr {margin: 1.6rem 0;}
 </style>
