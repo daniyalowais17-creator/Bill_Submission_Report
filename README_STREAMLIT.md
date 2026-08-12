@@ -34,12 +34,6 @@ to reuse its `process_one()` function, and `web_app.py` imports Flask at the
 top of the file — so Flask still needs to be installed for that import to
 succeed, even though `app.run()` is never called.
 
-## Deploying on Streamlit Cloud
-
-1. Push `streamlit_app.py`, `web_app.py`, and `requirements.txt` to the repo, all at the same level.
-2. In Streamlit Cloud, set the main file to `streamlit_app.py`.
-3. Deploy. If you previously deployed with a different requirements filename, use **Manage app → Reboot** so it reinstalls dependencies from the correct file.
-
 ## How it works
 
 1. Upload BDR
@@ -47,31 +41,3 @@ succeed, even though `app.run()` is never called.
 3. Upload Master
 4. Click **Process files**
 5. Download `Billing_Submission_Master_File.xlsx`
-
-Under the hood, `streamlit_app.py` imports `web_app.py` purely to call its
-`process_one()` function — the Flask/desktop startup code in `web_app.py`
-never executes on Streamlit.
-
-## Troubleshooting
-
-**`ModuleNotFoundError: No module named 'flask'`** (or pandas, numpy, etc.)
-This means Streamlit Cloud didn't install from your requirements file —
-almost always because the file isn't named exactly `requirements.txt`, or
-the app needs a reboot to pick up a fresh copy of it. Fix the filename,
-commit, and reboot the app from **Manage app**.
-
-**`web_app.py wasn't found next to streamlit_app.py`**
-Both files need to live in the same folder in the repo. Check the path
-Streamlit Cloud is using as the app root.
-
-**Processing runs but fails partway through**
-Expand "Technical details" under the error message in the app — it shows
-the full Python traceback from `process_one()`, which is the fastest way to
-tell whether the issue is in an uploaded file's format or in the processing
-logic itself.
-
-## Keeping the desktop build separate
-
-The EXE build stays independent of this. Use `web_app.py` + PyInstaller for
-the Windows desktop version, and `streamlit_app.py` for the web deployment —
-same processing engine, two different front ends.
