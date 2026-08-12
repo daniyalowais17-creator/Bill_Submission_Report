@@ -1,138 +1,147 @@
-# Billing Submission Automation
+# 📊 Billing Submission Automation
 
-> **Automate your daily Billing Submission workflow — without manually changing file sources.**
+> **Make your daily Billing Submission process faster, simpler, and more consistent.**
 
-## 📌 What is this application?
+## What is Billing Submission Automation?
 
-**Billing Submission Automation** is a desktop/web utility designed to simplify the daily billing submission preparation process.
+If you prepare a Billing Submission report every day, you probably know how repetitive the process can become — opening multiple files, updating data, checking statuses, matching information, and preparing the final Master file.
 
-Instead of manually opening multiple workbooks, changing sources, copying data, and applying the same processing logic every day, the application lets you provide the three required source files:
+**Billing Submission Automation** is built to simplify that entire process.
+
+Instead of manually changing file sources or repeating the same steps every day, you simply upload your three required files:
 
 1. **BDR (Billing Detail Report)**
 2. **Case_AR**
 3. **Master**
 
-The application processes these files using the established billing-submission logic and creates a new:
+The application processes the files using the existing Billing Submission business logic and generates a ready-to-use:
 
 **`Billing_Submission_Master_File.xlsx`**
 
-You can then open the generated workbook in Excel and manually refresh your Pivot/Data Model as part of the existing workflow.
+Your normal Excel workflow can then continue from there, including reviewing the output and refreshing the Pivot/Data Model.
 
-## 📂 Required input files
+---
 
-### 1. BDR
+# 📂 Required Files
 
-Upload the current **Billing Detail Report**.
+Before starting, make sure you have these three files ready.
 
-The application reads the BDR data and uses the relevant Master headers/fields according to the processing logic.
+### 1. BDR — Billing Detail Report
+
+Upload the latest BDR file for the current reporting cycle.
+
+The application reads the BDR data and uses the relevant fields to populate the Billing Submission Master according to the existing processing logic.
 
 ### 2. Case_AR
 
-Upload the current **Case_AR** Excel file.
+Upload the latest **Case_AR** Excel file.
 
-This file is used for the applicable Case ID / EDI Status lookup logic.
+This file is used for the applicable **Case ID / EDI Status lookup** during processing.
 
 ### 3. Master
 
-Upload the current **Billing Submission Master** workbook.
+Upload your current **Billing Submission Master** workbook.
 
-The Master workbook provides the destination structure and existing workbook/template.
+The Master file provides the structure and template that the application uses to create the final output.
+
+> **You don't need to manually change file sources inside the application. Simply upload the current files each time you run the process.**
 
 ---
 
-## ⚙️ What the application does
+# ⚙️ What the Application Does
 
-The processing workflow includes the established billing-submission logic, including:
+Once the three files are uploaded, the application handles the repetitive processing steps for you.
 
-- Reading BDR data
-- Reading Case_AR data
+The workflow includes:
+
+- Reading the BDR data
+- Reading the Case_AR data
 - Reading the Master workbook
-- Matching/populating applicable BDR data into the Master structure
-- Case_AR lookup logic for EDI Status
-- Submission Date handling
-- Billing Month calculation
-- Billing Week calculation
-- Verification Status / Bill Type / EDI Service Type / EDI Status cascade logic
-- Existing status conditions and business rules
-- Creation of a separate output workbook
+- Matching the applicable BDR data with the Master structure
+- Using Case_AR for the required EDI Status lookups
+- Handling Submission Date information
+- Calculating Billing Month
+- Calculating Billing Week
+- Applying Verification Status logic
+- Applying Bill Type logic
+- Applying EDI Service Type logic
+- Applying EDI Status logic
+- Applying the existing business rules and status conditions
+- Creating a new Billing Submission Master workbook
+
+The goal is simple:
+
+> **Upload the files once, let the application do the repetitive work, and use the generated Master file for the next step of your normal workflow.**
 
 ---
 
-## 🖥️ UI
+# 🖥️ How to Use the Application
 
-The application is designed around a simple three-file workflow:
+The application is designed to keep the process as simple as possible.
 
-### Step 1 — Upload BDR
+## Step 1 — Upload BDR
 
-Click:
+Select:
 
 **`Upload BDR`**
 
-and select the current BDR file.
-
-### Step 2 — Upload Case_AR
-
-Click:
-
-**`Upload Case_AR`**
-
-and select the current Case_AR workbook.
-
-### Step 3 — Upload Master
-
-Click:
-
-**`Upload Master`**
-
-and select the Master workbook.
-
-### Step 4 — Process
-
-Click:
-
-**`PROCESS FILES`**
-
-The application validates the selected files and starts processing.
-
-### Step 5 — Output
-
-The application generates:
-
-```text
-Billing_Submission_Master_File.xlsx
-```
-
-The original input files are not intended to be overwritten.
+and choose the latest Billing Detail Report.
 
 ---
 
-## 📊 Output
+## Step 2 — Upload Case_AR
 
-The generated workbook is the prepared **Billing Submission Master File**.
+Select:
 
-After generation, continue with the normal Excel workflow, including:
+**`Upload Case_AR`**
+
+and choose the latest Case_AR workbook.
+
+---
+
+## Step 3 — Upload Master
+
+Select:
+
+**`Upload Master`**
+
+and choose the current Billing Submission Master workbook.
+
+---
+
+## Step 4 — Process the Files
+
+Once all three files have been uploaded, select:
+
+**`PROCESS FILES`**
+
+The application will validate the files and begin processing.
+
+You can monitor the processing status directly from the application.
+
+---
+
+## Step 5 — Download the Result
+
+Once processing is complete, the application generates:
 
 ```text
-Open Billing_Submission_Master_File.xlsx
-              ↓
-Review output
-              ↓
+Billing_Submission_Master_File.xlsx
+
+## 📊 Final Output
+
+Upload BDR
+     +
+Upload Case_AR
+     +
+Upload Master
+     ↓
+Billing Submission Automation
+     ↓
+Billing_Submission_Master_File.xlsx
+     ↓
+Review the output
+     ↓
 Refresh Pivot / Data Model
-              ↓
+     ↓
 Continue normal reporting workflow
-
-
-
-## 🧩 Project dependencies
-
-Main Python dependencies:
-
-- Flask
-- pandas
-- NumPy
-- openpyxl
-- python-calamine
-- PyInstaller (for EXE builds)
-
-See `requirements.txt` for the dependency list.
-
