@@ -1,0 +1,6 @@
+streamlit
+flask
+pandas
+numpy
+openpyxl
+python-calamine
