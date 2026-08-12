@@ -125,7 +125,3 @@ You can monitor the processing status directly from the application.
 
 Once processing is complete, the application generates:
 
-     ↓
-Refresh Pivot / Data Model
-     ↓
-Continue normal reporting workflow
