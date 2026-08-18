@@ -111,15 +111,15 @@ st.divider()
 # Uploads
 # ---------------------------------------------------------------------------
 st.markdown('<div class="step-label">1. BDR</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Billing Detail Report — CSV or TXT</div>', unsafe_allow_html=True)
+st.markdown('<div class="step-hint">Billing Detail Report CSV or TXT</div>', unsafe_allow_html=True)
 bdr_file = st.file_uploader("BDR", type=["csv", "txt"], key="bdr", label_visibility="collapsed")
 
 st.markdown('<div class="step-label">2. Case_AR</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Case AR workbook — Excel</div>', unsafe_allow_html=True)
+st.markdown('<div class="step-hint">Case AR workbook Excel</div>', unsafe_allow_html=True)
 case_file = st.file_uploader("Case_AR", type=["xlsx", "xls"], key="case_ar", label_visibility="collapsed")
 
 st.markdown('<div class="step-label">3. Master</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Billing Submission Master — Excel</div>', unsafe_allow_html=True)
+st.markdown('<div class="step-hint">Billing Submission Master Excel</div>', unsafe_allow_html=True)
 master_file = st.file_uploader("Master", type=["xlsx", "xls"], key="master", label_visibility="collapsed")
 
 st.divider()
