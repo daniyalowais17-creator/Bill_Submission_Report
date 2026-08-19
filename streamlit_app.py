@@ -97,10 +97,9 @@ st.markdown("""
 
 /* ---- Functional glass sub-panel (uploads + process) ---- */
 .glass-card{
-    background: rgba(255,255,255,.72);
+    background: none;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(23,27,34,.07);
     border-radius: 20px;
     box-shadow: 0 20px 40px -28px rgba(23,27,34,.20);
 }
