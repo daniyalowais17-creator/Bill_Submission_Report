@@ -7,51 +7,71 @@ import importlib.util
 st.set_page_config(
     page_title="Billing Submission Automation",
     page_icon="📊",
-    layout="centered",
+    layout="wide",
 )
 
 # ---------------------------------------------------------------------------
-# Styling
+# Styling — cream hero left, gradient "glass" panel right (Voxai-inspired)
 # ---------------------------------------------------------------------------
 st.markdown("""
 <style>
-.block-container {max-width: 780px; padding-top: 2.2rem;}
+.block-container {max-width: 1080px; padding-top: 2.4rem;}
 
-.header-block {margin-bottom: 1.5rem;}
-.header-block h1 {
-    font-size: 1.35rem;
-    font-weight: 650;
-    letter-spacing: -0.01em;
-    margin: 0 0 0.4rem 0;
-    line-height: 1.3;
+/* ---- Left hero panel ---- */
+.hero-card{
+    background:#FAF7F2; border:1px solid rgba(23,27,34,.08); border-radius:20px;
+    padding:38px 34px; height:100%;
 }
-.header-block .subtitle {
-    margin: 0;
-    opacity: 0.7;
-    font-size: 0.92rem;
-    line-height: 1.5;
+.eyebrow{
+    display:inline-flex; align-items:center; gap:7px;
+    border:1px solid rgba(23,27,34,.10); background:rgba(255,255,255,.6);
+    color:#5B6472; font-size:11px; font-weight:650; letter-spacing:.04em; text-transform:uppercase;
+    padding:6px 12px; border-radius:999px; margin-bottom:18px;
+}
+.eyebrow .dot{width:6px; height:6px; border-radius:50%; background:#1C8C6B; box-shadow:0 0 8px #1C8C6B; display:inline-block;}
+.hero-title{
+    font-size:1.85rem; font-weight:700; letter-spacing:-.02em; line-height:1.18;
+    color:#171B22; margin:0 0 12px;
+}
+.hero-sub{font-size:14.5px; color:#5B6472; line-height:1.6; margin:0 0 22px;}
+.privacy-note{font-size:12px; color:#5B6472; margin-top:20px;}
+
+/* ---- Right functional panel ---- */
+.right-wrap{
+    background:linear-gradient(160deg,#3F5E77,#22303F);
+    border-radius:20px; padding:24px; height:100%;
+}
+.right-badge{
+    display:inline-flex; align-items:center; gap:7px;
+    border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
+    color:#fff; font-size:11.5px; padding:6px 12px; border-radius:999px; margin-bottom:16px;
+}
+.right-badge .dot{width:6px; height:6px; border-radius:50%; background:#7FE6C6; box-shadow:0 0 8px #7FE6C6; display:inline-block;}
+
+.glass-card{
+    background:rgba(255,255,255,.92); border-radius:16px; padding:20px 20px 6px;
 }
 
-.step-label {font-weight: 600; font-size: 0.85rem; margin-bottom: 0.25rem;}
-.step-hint {opacity: 0.65; font-size: 0.82rem; margin-top: -0.15rem; margin-bottom: 0.5rem;}
-hr {margin: 1.5rem 0;}
+.step-label {font-weight: 650; font-size: 0.85rem; margin-bottom: 0.2rem; color:#171B22;}
+.step-hint {opacity: 0.6; font-size: 0.78rem; margin-top: -0.1rem; margin-bottom: 0.4rem; color:#171B22;}
 
-/* Process button: red + ready when enabled, muted + clearly disabled otherwise */
+/* Process button: dark ink pill, matches hero accent */
 div.stButton > button[kind="primary"] {
-    background-color: #E5484D;
-    border: 1px solid #E5484D;
+    background-color: #171B22;
+    border: 1px solid #171B22;
     color: #ffffff;
-    font-weight: 600;
+    font-weight: 650;
+    border-radius: 10px;
     transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 div.stButton > button[kind="primary"]:hover:not(:disabled) {
-    background-color: #C93D42;
-    border-color: #C93D42;
+    background-color: #000000;
+    border-color: #000000;
 }
 div.stButton > button[kind="primary"]:disabled {
-    background-color: #262A31;
-    border: 1px solid #363B44;
-    color: rgba(255, 255, 255, 0.4);
+    background-color: #DCD8CF;
+    border: 1px solid #DCD8CF;
+    color: rgba(23, 27, 34, 0.45);
     opacity: 1;
 }
 div.stButton > button[kind="primary"]:disabled:hover {
@@ -60,12 +80,30 @@ div.stButton > button[kind="primary"]:disabled:hover {
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<div class="header-block">
-<h1>📊 Billing Submission Automation</h1>
-<p class="subtitle">Upload your BDR, Case_AR, and Master files below, then hit process. The tool builds the Billing Submission Master File for you.</p>
-</div>
-""", unsafe_allow_html=True)
+# ---------------------------------------------------------------------------
+# Hero: left marketing copy / right decorative "glass" intro
+# ---------------------------------------------------------------------------
+hero_left, hero_right = st.columns([1.1, 0.9], gap="medium")
+
+with hero_left:
+    st.markdown("""
+    <div class="hero-card">
+      <div class="eyebrow"><span class="dot"></span>Runs entirely in this session</div>
+      <div class="hero-title">Give your billing files a home that closes the month</div>
+      <div class="hero-sub">Upload BDR, Case_AR and Master — no code, no manual matching.
+      Get back a ready-to-submit Billing Submission Master File.</div>
+      <div class="privacy-note">🔒 Files are processed for this session only.</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with hero_right:
+    st.markdown("""
+    <div class="right-wrap">
+      <div class="right-badge"><span class="dot"></span>Local &amp; private</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.write("")
 
 # ---------------------------------------------------------------------------
 # Load the processing engine from web_app.py.
@@ -105,28 +143,25 @@ except Exception:
         st.code(traceback.format_exc())
     st.stop()
 
-st.divider()
+# ---------------------------------------------------------------------------
+# Uploads + process — inside a "glass card" to keep the visual language
+# ---------------------------------------------------------------------------
+st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 
-# ---------------------------------------------------------------------------
-# Uploads
-# ---------------------------------------------------------------------------
 st.markdown('<div class="step-label">1. BDR</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Billing Detail Report CSV or TXT</div>', unsafe_allow_html=True)
+st.markdown('<div class="step-hint">Billing Detail Report — CSV or TXT</div>', unsafe_allow_html=True)
 bdr_file = st.file_uploader("BDR", type=["csv", "txt"], key="bdr", label_visibility="collapsed")
 
 st.markdown('<div class="step-label">2. Case_AR</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Case AR workbook Excel</div>', unsafe_allow_html=True)
+st.markdown('<div class="step-hint">Case AR workbook — Excel</div>', unsafe_allow_html=True)
 case_file = st.file_uploader("Case_AR", type=["xlsx", "xls"], key="case_ar", label_visibility="collapsed")
 
 st.markdown('<div class="step-label">3. Master</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Billing Submission Master Excel</div>', unsafe_allow_html=True)
+st.markdown('<div class="step-hint">Billing Submission Master — Excel</div>', unsafe_allow_html=True)
 master_file = st.file_uploader("Master", type=["xlsx", "xls"], key="master", label_visibility="collapsed")
-
-st.divider()
 
 ready = bdr_file is not None and case_file is not None and master_file is not None
 
-# Build a specific "what's missing" message for the hover tooltip
 missing_files = []
 if bdr_file is None:
     missing_files.append("BDR")
@@ -140,13 +175,18 @@ if not ready:
 
 button_help = None if ready else f"Upload {', '.join(missing_files)} to enable processing"
 
-if st.button(
+process_clicked = st.button(
     "Process files",
     type="primary",
     disabled=not ready,
     use_container_width=True,
     help=button_help,
-):
+)
+
+st.markdown('</div>', unsafe_allow_html=True)
+st.write("")
+
+if process_clicked:
     temp_dir = Path(tempfile.mkdtemp(prefix="billing_submission_"))
     bdr_path = temp_dir / bdr_file.name
     case_path = temp_dir / case_file.name
