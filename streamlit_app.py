@@ -151,7 +151,7 @@ st.markdown("""
 <div class="hero-card">
     <div class="eyebrow">Automated Reporting Engine</div>
     <div class="hero-title">Billing Submission Automation</div>
-    <div class="hero-sub">Upload BDR, Case_AR and Master — we handle matching, formatting,
+    <div class="hero-sub">Upload BDR, Case-AR and Master-File. We handle matching, formatting,
     and submission-ready output.</div>
     <div class="pill-grid">
         <div class="pill"><span class="pill-dot"></span>Zero-code automation</div>
@@ -209,17 +209,17 @@ st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 
 with st.container(key="upload-bdr"):
     st.markdown('<div class="step-label">1. BDR</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-hint">Billing Detail Report — CSV or TXT</div>', unsafe_allow_html=True)
-    bdr_file = st.file_uploader("BDR", type=["csv", "txt"], key="bdr", label_visibility="collapsed")
+    st.markdown('<div class="step-hint">Billing Detail Report (.CSV)</div>', unsafe_allow_html=True)
+    bdr_file = st.file_uploader("BDR", type="csv", key="bdr", label_visibility="collapsed")
 
 with st.container(key="upload-case_ar"):
     st.markdown('<div class="step-label">2. Case_AR</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-hint">Case AR workbook — Excel</div>', unsafe_allow_html=True)
-    case_file = st.file_uploader("Case_AR", type=["xlsx", "xls"], key="case_ar", label_visibility="collapsed")
+    st.markdown('<div class="step-hint">Case AR workbook (.xlsx)</div>', unsafe_allow_html=True)
+    case_file = st.file_uploader("Case_AR", type="xlsx", key="case_ar", label_visibility="collapsed")
 
 with st.container(key="upload-master"):
     st.markdown('<div class="step-label">3. Master</div>', unsafe_allow_html=True)
-    st.markdown('<div class="step-hint">Billing Submission Master — Excel</div>', unsafe_allow_html=True)
+    st.markdown('<div class="step-hint">Billing Submission Master (.xls*)</div>', unsafe_allow_html=True)
     master_file = st.file_uploader("Master", type=["xlsx", "xls"], key="master", label_visibility="collapsed")
 
 ready = bdr_file is not None and case_file is not None and master_file is not None
