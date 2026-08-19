@@ -20,7 +20,7 @@ st.markdown("""
 /* ---- Left hero panel ---- */
 .hero-card{
     background:#FAF7F2; border:1px solid rgba(23,27,34,.08); border-radius:20px;
-    padding:38px 34px; height:100%;
+    padding:38px 34px; height:100%; margin-top: 20px;
 }
 .eyebrow{
     display:inline-flex; align-items:center; gap:7px;
