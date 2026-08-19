@@ -614,206 +614,272 @@ INDEX_HTML = r"""<!DOCTYPE html>
 <title>Billing Submission Automation</title>
 <style>
   :root{
-    --bg:#0A0E16;
-    --panel:#121826;
-    --panel-border:#212B3D;
-    --text:#EAEEF6;
-    --text-dim:#8B93A7;
-    --accent-a:#4F6EF7;
-    --accent-b:#8B5CF6;
-    --teal:#2DD4BF;
-    --danger:#F87171;
+    --cream:#FAF7F2;
+    --ink:#171B22;
+    --ink-dim:#5B6472;
+    --line:rgba(23,27,34,.10);
+    --panel:rgba(255,255,255,.88);
+    --panel-border:rgba(255,255,255,.55);
+    --text:#171B22;
+    --text-dim:#5B6472;
+    --accent-a:#171B22;
+    --accent-b:#3B4252;
+    --ok:#1C8C6B;
+    --warn:#C9A227;
+    --danger:#C1443C;
     --mono: "Cascadia Code","Consolas","SFMono-Regular",Menlo,monospace;
     --sans: -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box;}
+  html,body{margin:0; min-height:100vh;}
   body{
-    margin:0; min-height:100vh; background:
-      radial-gradient(1200px 600px at 15% -10%, rgba(79,110,247,.14), transparent 60%),
-      radial-gradient(1000px 500px at 100% 0%, rgba(45,212,191,.10), transparent 55%),
-      var(--bg);
-    color:var(--text); font-family:var(--sans);
-    padding:28px 20px 60px;
+    font-family:var(--sans); color:var(--text);
+    display:grid; grid-template-columns:0.95fr 1.15fr; min-height:100vh;
   }
-  .wrap{max-width:1040px; margin:0 auto;}
-  .hero{display:flex; align-items:center; justify-content:space-between; margin-bottom:26px;}
-  .hero-left{display:flex; align-items:center; gap:14px;}
-  .logo{
-    width:44px; height:44px; border-radius:12px; flex:0 0 auto;
+  @media (max-width:900px){ body{grid-template-columns:1fr;} }
+
+  /* ---------------- LEFT: marketing / hero panel ---------------- */
+  .left-panel{
+    background:var(--cream); padding:64px 52px; display:flex; flex-direction:column;
+    justify-content:center; position:relative;
+  }
+  .brand-row{display:flex; align-items:center; gap:11px; margin-bottom:34px;}
+  .brand-logo{
+    width:34px; height:34px; border-radius:9px; flex:0 0 auto;
     background:linear-gradient(135deg,var(--accent-a),var(--accent-b));
     display:flex; align-items:center; justify-content:center;
-    box-shadow:0 8px 24px -8px rgba(79,110,247,.6);
   }
-  .logo svg{width:22px; height:22px;}
-  h1{font-size:21px; margin:0; font-weight:650; letter-spacing:-.01em;}
-  .sub{color:var(--text-dim); font-size:13px; margin-top:3px;}
-  .badge{
-    display:flex; align-items:center; gap:7px;
-    border:1px solid var(--panel-border); background:rgba(45,212,191,.07);
-    color:var(--teal); font-size:12.5px; padding:7px 13px; border-radius:999px;
-    white-space:nowrap;
+  .brand-logo svg{width:17px; height:17px;}
+  .brand-name{font-weight:700; font-size:15px; letter-spacing:-.01em;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:7px; width:fit-content;
+    border:1px solid var(--line); background:rgba(255,255,255,.6);
+    color:var(--ink-dim); font-size:11.5px; font-weight:600; letter-spacing:.03em;
+    text-transform:uppercase; padding:6px 12px; border-radius:999px; margin-bottom:22px;
   }
-  .badge .dot{width:6px; height:6px; border-radius:50%; background:var(--teal); box-shadow:0 0 8px var(--teal);}
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--ok); box-shadow:0 0 8px var(--ok);}
 
-  .grid{display:grid; grid-template-columns:1.35fr 1fr; gap:18px;}
-  @media (max-width:860px){ .grid{grid-template-columns:1fr;} }
+  h1.hero-title{
+    font-size:2.15rem; line-height:1.16; font-weight:700; letter-spacing:-.02em;
+    margin:0 0 14px; color:var(--ink); max-width:480px;
+  }
+  .hero-sub{
+    font-size:15px; color:var(--ink-dim); line-height:1.6; margin:0 0 30px; max-width:420px;
+  }
+
+  .trust-row{margin-top:38px; padding-top:22px; border-top:1px solid var(--line);}
+  .trust-label{font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:12px; font-weight:650;}
+  .trust-chips{display:flex; gap:10px; flex-wrap:wrap;}
+  .trust-chip{
+    display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--ink-dim);
+    border:1px solid var(--line); border-radius:999px; padding:6px 11px; background:rgba(255,255,255,.55);
+  }
+  .trust-chip.on{color:var(--ok); border-color:rgba(28,140,107,.35); background:rgba(28,140,107,.08);}
+  .trust-chip .chip-dot{width:6px; height:6px; border-radius:50%; background:currentColor;}
+
+  .privacy-note{margin-top:26px; font-size:12px; color:var(--ink-dim); display:flex; align-items:center; gap:7px;}
+
+  /* ---------------- RIGHT: functional panel over gradient ---------------- */
+  .right-panel{
+    position:relative; overflow:hidden; padding:36px 32px;
+    background:
+      radial-gradient(700px 420px at 15% 10%, rgba(255,255,255,.16), transparent 55%),
+      radial-gradient(600px 500px at 90% 85%, rgba(255,255,255,.10), transparent 55%),
+      linear-gradient(160deg,#3F5E77,#22303F);
+  }
+  .right-panel::before, .right-panel::after{
+    content:""; position:absolute; border-radius:50%; filter:blur(70px);
+    background:rgba(255,255,255,.22); pointer-events:none;
+  }
+  .right-panel::before{width:260px; height:260px; top:-60px; right:10%;}
+  .right-panel::after{width:220px; height:220px; bottom:-40px; left:-40px; background:rgba(255,255,255,.14);}
+
+  .panel-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; position:relative; z-index:1;}
+  .panel-top .sub{color:rgba(255,255,255,.7); font-size:12.5px;}
+  .live-badge{
+    display:flex; align-items:center; gap:7px;
+    border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
+    color:#fff; font-size:12px; padding:6px 12px; border-radius:999px; white-space:nowrap;
+  }
+  .live-badge .dot{width:6px; height:6px; border-radius:50%; background:#7FE6C6; box-shadow:0 0 8px #7FE6C6;}
+
+  .stack{position:relative; z-index:1; display:flex; flex-direction:column; gap:16px;}
 
   .card{
-    background:var(--panel); border:1px solid var(--panel-border); border-radius:16px;
-    padding:22px;
+    background:var(--panel); border:1px solid var(--panel-border); border-radius:18px;
+    padding:22px; backdrop-filter:blur(14px); box-shadow:0 18px 40px -22px rgba(10,15,25,.35);
   }
-  .card h2{font-size:14.5px; margin:0 0 3px; font-weight:650;}
-  .card .hint{color:var(--text-dim); font-size:12.5px; margin:0 0 16px;}
+  .card h2{font-size:14px; margin:0 0 3px; font-weight:700; color:var(--text);}
+  .card .hint{color:var(--text-dim); font-size:12px; margin:0 0 16px;}
 
   .file-row{
     display:flex; align-items:center; gap:12px;
-    border:1px solid var(--panel-border); border-radius:12px; padding:12px 14px; margin-bottom:10px;
-    background:rgba(255,255,255,.015);
+    border:1px solid var(--line); border-radius:12px; padding:11px 13px; margin-bottom:9px;
+    background:rgba(255,255,255,.5);
   }
   .file-icon{
-    width:34px; height:34px; border-radius:9px; flex:0 0 auto;
-    background:rgba(79,110,247,.12); display:flex; align-items:center; justify-content:center;
+    width:32px; height:32px; border-radius:9px; flex:0 0 auto;
+    background:rgba(23,27,34,.07); display:flex; align-items:center; justify-content:center;
   }
-  .file-icon svg{width:16px; height:16px; opacity:.9;}
+  .file-icon svg{width:15px; height:15px; opacity:.85;}
   .file-info{flex:1; min-width:0;}
-  .file-name{font-size:13.5px; font-weight:560; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-  .file-meta{font-size:11.5px; color:var(--text-dim); margin-top:1px;}
-  .file-meta.ok{color:var(--teal);}
-  .file-meta.req{color:#F0B429;}
+  .file-name{font-size:13px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .file-meta{font-size:11px; color:var(--text-dim); margin-top:1px;}
+  .file-meta.ok{color:var(--ok);}
+  .file-meta.req{color:var(--warn);}
   .upload-btn{
-    border:1px solid var(--panel-border); background:rgba(255,255,255,.03); color:var(--text);
-    font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:9px; cursor:pointer;
+    border:1px solid var(--line); background:#fff; color:var(--text);
+    font-size:12px; font-weight:650; padding:7px 13px; border-radius:9px; cursor:pointer;
     white-space:nowrap;
   }
-  .upload-btn:hover{background:rgba(255,255,255,.07);}
+  .upload-btn:hover{background:rgba(23,27,34,.05);}
 
   .process-btn{
     width:100%; margin-top:6px; padding:14px; border:none; border-radius:12px;
-    font-size:14px; font-weight:650; letter-spacing:.02em; color:#fff; cursor:pointer;
+    font-size:14px; font-weight:650; letter-spacing:.01em; color:#fff; cursor:pointer;
     background:linear-gradient(135deg,var(--accent-a),var(--accent-b));
-    box-shadow:0 10px 26px -10px rgba(124,92,252,.55);
-    transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    box-shadow:0 12px 26px -12px rgba(23,27,34,.55);
+    transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease, background .15s ease;
   }
-  .process-btn:hover:not(:disabled){transform:translateY(-1px);}
-  .process-btn:disabled{opacity:.5; cursor:not-allowed; box-shadow:none;}
+  .process-btn:hover:not(:disabled){transform:translateY(-1px); background:linear-gradient(135deg,#000,#1c2230);}
+  .process-btn:disabled{
+    background:#DCD8CF; color:rgba(23,27,34,.45); box-shadow:none; cursor:not-allowed;
+  }
 
   .out-row{
     display:flex; align-items:center; gap:12px;
-    border:1px solid var(--panel-border); border-radius:12px; padding:12px 14px; margin-bottom:16px;
-    background:rgba(255,255,255,.015);
+    border:1px solid var(--line); border-radius:12px; padding:11px 13px; margin-bottom:14px;
+    background:rgba(255,255,255,.5);
   }
-  .out-name{font-size:13px; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text-dim);}
+  .out-name{font-size:12.5px; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text-dim);}
   .download-btn{
-    border:1px solid var(--panel-border); background:rgba(45,212,191,.10); color:var(--teal);
-    font-size:12.5px; font-weight:650; padding:8px 14px; border-radius:9px; cursor:pointer;
+    border:1px solid rgba(28,140,107,.35); background:rgba(28,140,107,.10); color:var(--ok);
+    font-size:12px; font-weight:650; padding:7px 13px; border-radius:9px; cursor:pointer;
   }
-  .download-btn:disabled{opacity:.35; cursor:not-allowed;}
+  .download-btn:disabled{opacity:.4; cursor:not-allowed;}
 
-  .status-line{display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:14px;}
+  .status-line{display:flex; align-items:center; gap:8px; font-size:12.5px; margin-bottom:12px; color:var(--text-dim);}
   .status-dot{width:8px; height:8px; border-radius:50%; background:var(--text-dim);}
-  .status-dot.running{background:#F0B429; box-shadow:0 0 8px #F0B429; animation:pulse 1.1s infinite;}
-  .status-dot.done{background:var(--teal); box-shadow:0 0 8px var(--teal);}
+  .status-dot.running{background:var(--warn); box-shadow:0 0 8px var(--warn); animation:pulse 1.1s infinite;}
+  .status-dot.done{background:var(--ok); box-shadow:0 0 8px var(--ok);}
   .status-dot.error{background:var(--danger); box-shadow:0 0 8px var(--danger);}
   @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
 
   .clear-btn{
-    border:1px solid var(--panel-border); background:transparent; color:var(--text-dim);
-    font-size:12.5px; padding:8px 14px; border-radius:9px; cursor:pointer;
+    border:1px solid var(--line); background:transparent; color:var(--text-dim);
+    font-size:12px; padding:7px 13px; border-radius:9px; cursor:pointer;
   }
-  .clear-btn:hover{color:var(--text); background:rgba(255,255,255,.04);}
+  .clear-btn:hover{color:var(--text); background:rgba(23,27,34,.05);}
 
-  .log-card{margin-top:18px;}
   .log-box{
-    background:#080B12; border:1px solid var(--panel-border); border-radius:12px;
-    padding:14px 16px; height:230px; overflow-y:auto;
-    font-family:var(--mono); font-size:12.5px; line-height:1.6; color:#B9C2D4;
+    background:#12161D; border:1px solid rgba(255,255,255,.08); border-radius:12px;
+    padding:13px 15px; height:190px; overflow-y:auto;
+    font-family:var(--mono); font-size:12px; line-height:1.6; color:#C6CCDA;
     white-space:pre-wrap; word-break:break-word;
   }
-  .footnote{color:var(--text-dim); font-size:12px; margin-top:12px;}
+  .footnote{color:var(--text-dim); font-size:11.5px; margin-top:11px;}
   input[type=file]{display:none;}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="hero">
-    <div class="hero-left">
-      <div class="logo">
+  <!-- ================= LEFT: hero / marketing panel ================= -->
+  <div class="left-panel">
+    <div class="brand-row">
+      <div class="brand-logo">
         <svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="white"/></svg>
       </div>
-      <div>
-        <h1>Billing Submission Automation</h1>
-        <div class="sub">BDR + Case_AR + Master &rarr; Billing Submission Master File</div>
-      </div>
-    </div>
-    <div class="badge"><span class="dot"></span>Runs on your machine &mdash; files never leave this PC</div>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <h2>Input Files</h2>
-      <div class="hint">Provider and filename do not matter &mdash; just pick the right file for each row.</div>
-
-      <div class="file-row" id="row-bdr">
-        <div class="file-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4F6EF7" stroke-width="1.6"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg></div>
-        <div class="file-info">
-          <div class="file-name" id="name-bdr">No BDR file selected</div>
-          <div class="file-meta req" id="meta-bdr">Required &middot; .csv</div>
-        </div>
-        <button class="upload-btn" onclick="document.getElementById('input-bdr').click()">Upload</button>
-        <input type="file" id="input-bdr" accept=".csv">
-      </div>
-
-      <div class="file-row" id="row-case_ar">
-        <div class="file-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4F6EF7" stroke-width="1.6"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg></div>
-        <div class="file-info">
-          <div class="file-name" id="name-case_ar">No Case_AR file selected</div>
-          <div class="file-meta req" id="meta-case_ar">Required &middot; .xlsx</div>
-        </div>
-        <button class="upload-btn" onclick="document.getElementById('input-case_ar').click()">Upload</button>
-        <input type="file" id="input-case_ar" accept=".xlsx,.xlsm">
-      </div>
-
-      <div class="file-row" id="row-master">
-        <div class="file-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4F6EF7" stroke-width="1.6"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg></div>
-        <div class="file-info">
-          <div class="file-name" id="name-master">No Master file selected</div>
-          <div class="file-meta req" id="meta-master">Required &middot; .xlsx</div>
-        </div>
-        <button class="upload-btn" onclick="document.getElementById('input-master').click()">Upload</button>
-        <input type="file" id="input-master" accept=".xlsx,.xlsm">
-      </div>
-
-      <button class="process-btn" id="process-btn" disabled onclick="startProcessing()">PROCESS FILES</button>
+      <div class="brand-name">Billing Submission Automation</div>
     </div>
 
-    <div class="card">
-      <h2>Output</h2>
-      <div class="hint">Nothing is downloaded until processing finishes.</div>
+    <div class="eyebrow"><span class="dot"></span>Runs entirely on this machine</div>
 
-      <div class="out-row">
-        <div class="out-name" id="out-name">Billing_Submission_Master_File.xlsx</div>
-        <button class="download-btn" id="download-btn" disabled onclick="downloadResult()">Download</button>
+    <h1 class="hero-title">Give your billing files a home that closes the month</h1>
+    <p class="hero-sub">Deploy the report builder in seconds — no code, no manual matching. Upload BDR, Case_AR and Master, and get a ready-to-submit Billing Submission Master File.</p>
+
+    <div class="trust-row">
+      <div class="trust-label">File checklist</div>
+      <div class="trust-chips">
+        <div class="trust-chip req" id="chip-bdr"><span class="chip-dot"></span>BDR</div>
+        <div class="trust-chip req" id="chip-case_ar"><span class="chip-dot"></span>Case_AR</div>
+        <div class="trust-chip req" id="chip-master"><span class="chip-dot"></span>Master</div>
+      </div>
+    </div>
+
+    <div class="privacy-note">🔒 Files never leave this PC — everything is processed locally.</div>
+  </div>
+
+  <!-- ================= RIGHT: functional panel ================= -->
+  <div class="right-panel">
+    <div class="panel-top">
+      <div class="sub">BDR + Case_AR + Master &rarr; Billing Submission Master File</div>
+      <div class="live-badge"><span class="dot"></span>Local &amp; private</div>
+    </div>
+
+    <div class="stack">
+      <div class="card">
+        <h2>Input Files</h2>
+        <div class="hint">Provider and filename do not matter &mdash; just pick the right file for each row.</div>
+
+        <div class="file-row" id="row-bdr">
+          <div class="file-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#171B22" stroke-width="1.6"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg></div>
+          <div class="file-info">
+            <div class="file-name" id="name-bdr">No BDR file selected</div>
+            <div class="file-meta req" id="meta-bdr">Required &middot; .csv</div>
+          </div>
+          <button class="upload-btn" onclick="document.getElementById('input-bdr').click()">Upload</button>
+          <input type="file" id="input-bdr" accept=".csv">
+        </div>
+
+        <div class="file-row" id="row-case_ar">
+          <div class="file-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#171B22" stroke-width="1.6"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg></div>
+          <div class="file-info">
+            <div class="file-name" id="name-case_ar">No Case_AR file selected</div>
+            <div class="file-meta req" id="meta-case_ar">Required &middot; .xlsx</div>
+          </div>
+          <button class="upload-btn" onclick="document.getElementById('input-case_ar').click()">Upload</button>
+          <input type="file" id="input-case_ar" accept=".xlsx,.xlsm">
+        </div>
+
+        <div class="file-row" id="row-master">
+          <div class="file-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#171B22" stroke-width="1.6"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg></div>
+          <div class="file-info">
+            <div class="file-name" id="name-master">No Master file selected</div>
+            <div class="file-meta req" id="meta-master">Required &middot; .xlsx</div>
+          </div>
+          <button class="upload-btn" onclick="document.getElementById('input-master').click()">Upload</button>
+          <input type="file" id="input-master" accept=".xlsx,.xlsm">
+        </div>
+
+        <button class="process-btn" id="process-btn" disabled onclick="startProcessing()">PROCESS FILES</button>
       </div>
 
-      <div class="status-line">
-        <span class="status-dot" id="status-dot"></span>
-        <span id="status-text">Ready</span>
+      <div class="card">
+        <h2>Output</h2>
+        <div class="hint">Nothing is downloaded until processing finishes.</div>
+
+        <div class="out-row">
+          <div class="out-name" id="out-name">Billing_Submission_Master_File.xlsx</div>
+          <button class="download-btn" id="download-btn" disabled onclick="downloadResult()">Download</button>
+        </div>
+
+        <div class="status-line">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status-text">Ready</span>
+        </div>
+
+        <button class="clear-btn" onclick="clearAll()">Clear</button>
+
+        <div class="footnote">After downloading, open the file in Excel and use Data &rarr; Refresh All so the Summary sheet picks up the new data.</div>
       </div>
 
-      <button class="clear-btn" onclick="clearAll()">Clear</button>
-
-      <div class="footnote">After downloading, open the file in Excel and use Data &rarr; Refresh All so the Summary sheet picks up the new data.</div>
+      <div class="card">
+        <h2>Processing Log</h2>
+        <div class="hint">Live output from the report engine.</div>
+        <div class="log-box" id="log-box">Ready. Select the three input files.</div>
+      </div>
     </div>
   </div>
-
-  <div class="card log-card">
-    <h2>Processing Log</h2>
-    <div class="hint">Live output from the report engine.</div>
-    <div class="log-box" id="log-box">Ready. Select the three input files.</div>
-  </div>
-
-</div>
 
 <script>
 const files = { bdr: null, case_ar: null, master: null };
@@ -829,6 +895,8 @@ for (const key of ['bdr','case_ar','master']) {
     const meta = document.getElementById('meta-' + key);
     meta.textContent = 'Selected \u00b7 ' + (f.size/1024/1024).toFixed(2) + ' MB';
     meta.className = 'file-meta ok';
+    const chip = document.getElementById('chip-' + key);
+    if (chip) chip.classList.add('on');
     updateProcessButton();
   });
 }
@@ -906,6 +974,8 @@ function clearAll(){
     meta.textContent = 'Required \u00b7 ' + (key==='bdr' ? '.csv' : '.xlsx');
     meta.className = 'file-meta req';
     document.getElementById('input-' + key).value = '';
+    const chip = document.getElementById('chip-' + key);
+    if (chip) chip.classList.remove('on');
   }
   updateProcessButton();
   document.getElementById('download-btn').disabled = true;
