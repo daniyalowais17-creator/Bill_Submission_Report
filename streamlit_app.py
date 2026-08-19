@@ -150,7 +150,7 @@ st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 
 st.markdown('<div class="step-label">1. BDR</div>', unsafe_allow_html=True)
 st.markdown('<div class="step-hint">Billing Detail Report (.CSV) </div>', unsafe_allow_html=True)
-bdr_file = st.file_uploader("BDR", type=["csv", "txt"], key="bdr", label_visibility="collapsed")
+bdr_file = st.file_uploader("BDR", type="csv", key="bdr", label_visibility="collapsed")
 
 st.markdown('<div class="step-label">2. Case_AR</div>', unsafe_allow_html=True)
 st.markdown('<div class="step-hint">Case AR workbook (.xlsx)</div>', unsafe_allow_html=True)
