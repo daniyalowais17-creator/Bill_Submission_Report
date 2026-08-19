@@ -38,6 +38,7 @@ st.markdown("""
         0 30px 60px -30px rgba(23,27,34,.18),
         0 1px 0 rgba(255,255,255,.8) inset;
     margin-bottom: 22px;
+    margin-top:20px;
 }
 
 .eyebrow{
