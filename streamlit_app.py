@@ -92,6 +92,9 @@ with hero_left:
       <div class="hero-title">Billing Submission Report</div>
       <div class="hero-sub">Upload BDR, Case_AR and Master File &
       Get back a ready-to-submit Billing Submission Master File.</div>
+    <div class="right-wrap">
+      <div class="right-badge"><span class="dot"></span>Local &amp; private</div>
+    </div>
       <div class="privacy-note"></div>
     </div>
     """, unsafe_allow_html=True)
