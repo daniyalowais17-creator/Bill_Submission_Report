@@ -90,9 +90,9 @@ with hero_left:
     <div class="hero-card">
       <div class="eyebrow"><span class="dot"></span>Runs entirely in this session</div>
       <div class="hero-title">Give your billing files a home that closes the month</div>
-      <div class="hero-sub">Upload BDR, Case_AR and Master — no code, no manual matching.
+      <div class="hero-sub">Upload BDR, Case_AR and Master File &
       Get back a ready-to-submit Billing Submission Master File.</div>
-      <div class="privacy-note">🔒 Files are processed for this session only.</div>
+      <div class="privacy-note"></div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -149,15 +149,15 @@ except Exception:
 st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 
 st.markdown('<div class="step-label">1. BDR</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Billing Detail Report — CSV or TXT</div>', unsafe_allow_html=True)
+st.markdown('<div class="step-hint">Billing Detail Report (.CSV) </div>', unsafe_allow_html=True)
 bdr_file = st.file_uploader("BDR", type=["csv", "txt"], key="bdr", label_visibility="collapsed")
 
 st.markdown('<div class="step-label">2. Case_AR</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Case AR workbook — Excel</div>', unsafe_allow_html=True)
+st.markdown('<div class="step-hint">Case AR workbook (.xlsx)</div>', unsafe_allow_html=True)
 case_file = st.file_uploader("Case_AR", type=["xlsx", "xls"], key="case_ar", label_visibility="collapsed")
 
 st.markdown('<div class="step-label">3. Master</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Billing Submission Master — Excel</div>', unsafe_allow_html=True)
+st.markdown('<div class="step-hint">Billing Submission Master (.xlsx)</div>', unsafe_allow_html=True)
 master_file = st.file_uploader("Master", type=["xlsx", "xls"], key="master", label_visibility="collapsed")
 
 ready = bdr_file is not None and case_file is not None and master_file is not None
