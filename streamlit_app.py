@@ -100,7 +100,6 @@ st.markdown("""
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(23,27,34,.07);
     border-radius: 20px;
-    padding: 26px 26px 8px;
     box-shadow: 0 20px 40px -28px rgba(23,27,34,.20);
 }
 
