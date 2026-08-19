@@ -11,51 +11,102 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------------------------------
-# Styling — cream hero left, gradient "glass" panel right (Voxai-inspired)
+# Styling — single glassmorphic hero, Apple-style restraint
 # ---------------------------------------------------------------------------
 st.markdown("""
 <style>
-.block-container {max-width: 1080px; padding-top: 2.4rem;}
+.block-container {max-width: 880px; padding-top: 2.6rem;}
 
-/* ---- Left hero panel ---- */
-.hero-card{
-    background:#FAF7F2; border:1px solid rgba(23,27,34,.08); border-radius:20px;
-    padding:38px 100px; height:100%; margin-top: 20px; text-align:center;
+/* Soft ambient backdrop so the glass has something to refract */
+.stApp {
+    background:
+        radial-gradient(900px 500px at 20% -10%, rgba(63,94,119,.08), transparent 60%),
+        radial-gradient(700px 500px at 100% 10%, rgba(28,140,107,.06), transparent 55%),
+        #FAFAF8;
 }
+
+/* ---- Hero: one unified glass card ---- */
+.hero-card{
+    background: rgba(255,255,255,.62);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 28px;
+    padding: 56px 48px 40px;
+    text-align: center;
+    box-shadow:
+        0 30px 60px -30px rgba(23,27,34,.18),
+        0 1px 0 rgba(255,255,255,.8) inset;
+    margin-bottom: 22px;
+}
+
 .eyebrow{
     display:inline-flex; align-items:center; gap:7px;
-    border:1px solid rgba(23,27,34,.10); background:rgba(255,255,255,.6);
-    color:#5B6472; font-size:11px; font-weight:650; letter-spacing:.04em; text-transform:uppercase;
-    padding:6px 12px; border-radius:999px; margin-bottom:18px;
+    color:#8A8F99; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    margin-bottom: 14px;
 }
-.eyebrow .dot{width:6px; height:6px; border-radius:50%; background:#1C8C6B; box-shadow:0 0 8px #1C8C6B; display:inline-block;}
+
 .hero-title{
-    font-size:1.85rem; font-weight:700; letter-spacing:-.02em; line-height:1.18;
-    color:#171B22; margin:0 0 12px;
+    font-size: 2.4rem; font-weight: 750; letter-spacing:-.025em; line-height:1.15;
+    color:#14171D; margin: 0 0 12px;
 }
-.hero-sub{font-size:14.5px; color:#5B6472; line-height:1.6; margin:0 0 22px;}
-.privacy-note{font-size:12px; color:#5B6472; margin-top:20px;}
 
-/* ---- Right functional panel ---- */
-.right-wrap{
-    background:linear-gradient(160deg,#3F5E77,#22303F);
-    border-radius:20px; padding:24px; height:100%;margin-top:20px;
+.hero-sub{
+    font-size: 15px; color:#6B7280; line-height:1.6; max-width:520px;
+    margin: 0 auto 30px;
 }
-.right-badge{
-    display:inline-flex; align-items:center; gap:7px;
-    border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
-    color:#fff; font-size:11.5px; padding:6px 12px; border-radius:999px; margin-bottom:16px;
-}
-.right-badge .dot{width:6px; height:6px; border-radius:50%; background:#7FE6C6; box-shadow:0 0 8px #7FE6C6; display:inline-block;}
 
+/* ---- Feature pill grid: 4 items, evenly aligned ---- */
+.pill-grid{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;
+    max-width: 640px; margin: 0 auto 30px;
+}
+@media (max-width: 700px){ .pill-grid{ grid-template-columns: repeat(2, 1fr); } }
+
+.pill{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    background: rgba(255,255,255,.72);
+    border: 1px solid rgba(23,27,34,.08);
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-size: 12.5px; font-weight: 600; color:#3A3F47;
+    white-space: nowrap;
+    box-shadow: 0 1px 0 rgba(255,255,255,.9) inset;
+}
+
+.pill-dot{
+    width:7px; height:7px; border-radius:50%; flex:0 0 auto;
+    background:#1C8C6B;
+    box-shadow: 0 0 0 0 rgba(28,140,107,.55);
+    animation: breathe 2.1s ease-in-out infinite;
+}
+@keyframes breathe{
+    0%   { box-shadow: 0 0 0 0 rgba(28,140,107,.45); opacity:1; }
+    70%  { box-shadow: 0 0 0 6px rgba(28,140,107,0); opacity:.55; }
+    100% { box-shadow: 0 0 0 0 rgba(28,140,107,0); opacity:1; }
+}
+
+.hero-divider{
+    height:1px; width:100%;
+    background: linear-gradient(90deg, transparent, rgba(23,27,34,.10), transparent);
+    margin: 4px 0 0;
+}
+
+/* ---- Functional glass sub-panel (uploads + process) ---- */
 .glass-card{
-    background:rgba(255,255,255,.92); border-radius:16px; padding:20px 20px 6px;
+    background: rgba(255,255,255,.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(23,27,34,.07);
+    border-radius: 20px;
+    padding: 26px 26px 8px;
+    box-shadow: 0 20px 40px -28px rgba(23,27,34,.20);
 }
 
 .step-label {font-weight: 650; font-size: 0.85rem; margin-bottom: 0.2rem; color:#171B22;}
 .step-hint {opacity: 0.6; font-size: 0.78rem; margin-top: -0.1rem; margin-bottom: 0.4rem; color:#171B22;}
 
-/* Process button: dark ink pill, matches hero accent */
+/* Process button: dark ink pill */
 div.stButton > button[kind="primary"] {
     background-color: #171B22;
     border: 1px solid #171B22;
@@ -69,8 +120,8 @@ div.stButton > button[kind="primary"]:hover:not(:disabled) {
     border-color: #000000;
 }
 div.stButton > button[kind="primary"]:disabled {
-    background-color: #DCD8CF;
-    border: 1px solid #DCD8CF;
+    background-color: #E4E1D9;
+    border: 1px solid #E4E1D9;
     color: rgba(23, 27, 34, 0.45);
     opacity: 1;
 }
@@ -81,29 +132,23 @@ div.stButton > button[kind="primary"]:disabled:hover {
 """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
-# Hero: left marketing copy / right decorative "glass" intro
+# Hero: single glass card, heading, subtitle, 4 feature pills
 # ---------------------------------------------------------------------------
-hero_left, hero_right = st.columns([1.1, 0.9], gap="medium")
-
-with hero_left:
-    st.markdown("""
-    <div class="hero-card">
-      <div class="eyebrow"><span class="dot"></span>Runs entirely in this session</div>
-      <div class="hero-title">Billing Submission Report</div>
-      <div class="hero-sub">Upload BDR, Case_AR and Master File &
-      Get back a ready-to-submit Billing Submission Master File.</div>
-      <div class="privacy-note"></div>
+st.markdown("""
+<div class="hero-card">
+    <div class="eyebrow">Automated Reporting Engine</div>
+    <div class="hero-title">Billing Submission Automation</div>
+    <div class="hero-sub">Upload BDR, Case_AR and Master — we handle matching, formatting,
+    and submission-ready output.</div>
+    <div class="pill-grid">
+        <div class="pill"><span class="pill-dot"></span>Zero-code automation</div>
+        <div class="pill"><span class="pill-dot"></span>Instant Excel output</div>
+        <div class="pill"><span class="pill-dot"></span>Real-time processing</div>
+        <div class="pill"><span class="pill-dot"></span>Local &amp; private</div>
     </div>
-    """, unsafe_allow_html=True)
-
-with hero_right:
-    st.markdown("""
-    <div class="right-wrap">
-      <div class="right-badge"><span class="dot"></span>Local &amp; private</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.write("")
+    <div class="hero-divider"></div>
+</div>
+""", unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
 # Load the processing engine from web_app.py.
@@ -144,21 +189,21 @@ except Exception:
     st.stop()
 
 # ---------------------------------------------------------------------------
-# Uploads + process — inside a "glass card" to keep the visual language
+# Uploads + process — glass sub-panel below the hero
 # ---------------------------------------------------------------------------
 st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 
 st.markdown('<div class="step-label">1. BDR</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Billing Detail Report (.CSV) </div>', unsafe_allow_html=True)
-bdr_file = st.file_uploader("BDR", type="csv", key="bdr", label_visibility="collapsed")
+st.markdown('<div class="step-hint">Billing Detail Report — CSV or TXT</div>', unsafe_allow_html=True)
+bdr_file = st.file_uploader("BDR", type=["csv", "txt"], key="bdr", label_visibility="collapsed")
 
 st.markdown('<div class="step-label">2. Case_AR</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Case AR workbook (.xlsx)</div>', unsafe_allow_html=True)
-case_file = st.file_uploader("Case_AR", type="xlsx", key="case_ar", label_visibility="collapsed")
+st.markdown('<div class="step-hint">Case AR workbook — Excel</div>', unsafe_allow_html=True)
+case_file = st.file_uploader("Case_AR", type=["xlsx", "xls"], key="case_ar", label_visibility="collapsed")
 
 st.markdown('<div class="step-label">3. Master</div>', unsafe_allow_html=True)
-st.markdown('<div class="step-hint">Billing Submission Master (.xlsx)</div>', unsafe_allow_html=True)
-master_file = st.file_uploader("Master", type="xlsx", key="master", label_visibility="collapsed")
+st.markdown('<div class="step-hint">Billing Submission Master — Excel</div>', unsafe_allow_html=True)
+master_file = st.file_uploader("Master", type=["xlsx", "xls"], key="master", label_visibility="collapsed")
 
 ready = bdr_file is not None and case_file is not None and master_file is not None
 
