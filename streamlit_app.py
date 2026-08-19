@@ -39,7 +39,7 @@ st.markdown("""
 /* ---- Right functional panel ---- */
 .right-wrap{
     background:linear-gradient(160deg,#3F5E77,#22303F);
-    border-radius:20px; padding:24px; height:100%;
+    border-radius:20px; padding:24px; height:100%;margin-top:20px;
 }
 .right-badge{
     display:inline-flex; align-items:center; gap:7px;
