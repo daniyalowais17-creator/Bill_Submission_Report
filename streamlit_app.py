@@ -89,7 +89,7 @@ with hero_left:
     st.markdown("""
     <div class="hero-card">
       <div class="eyebrow"><span class="dot"></span>Runs entirely in this session</div>
-      <div class="hero-title">Give your billing files a home that closes the month</div>
+      <div class="hero-title">Billing Submission Report</div>
       <div class="hero-sub">Upload BDR, Case_AR and Master File &
       Get back a ready-to-submit Billing Submission Master File.</div>
       <div class="privacy-note"></div>
